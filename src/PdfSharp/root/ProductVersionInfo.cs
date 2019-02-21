@@ -44,7 +44,7 @@ namespace PdfSharp
         /// <summary>
         /// A characteristic description of the product.
         /// </summary>
-        public const string Description = "A .NET library for processing PDF.";
+        public const string Description = "[NET Standard] A .NET library for processing PDF.";
 
         /// <summary>
         /// The PDF producer information string.
@@ -85,7 +85,7 @@ namespace PdfSharp
         /// <summary>
         /// The name the product.
         /// </summary>
-        public const string Product = "PDFsharp";
+        public const string Product = "PDFSharp.Standard";
 
         /// <summary>
         /// The copyright information.
