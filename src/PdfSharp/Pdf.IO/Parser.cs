@@ -62,13 +62,15 @@ namespace PdfSharp.Pdf.IO
             _document = document;
             _lexer = new Lexer(pdf);
             _stack = new ShiftStack();
+            _strict = true;
         }
 
-        public Parser(PdfDocument document)
+        public Parser(PdfDocument document, bool strict = true)
         {
             _document = document;
             _lexer = document._lexer;
             _stack = new ShiftStack();
+            _strict = strict;
         }
 
         /// <summary>
@@ -1381,8 +1383,9 @@ namespace PdfSharp.Pdf.IO
                                 // There is a tool where ID is off by one. In this case we use the ID from the object, not the ID from the XRef table.
                                 if (generation == generationChecked && id == idChecked + 1)
                                     idToUse = idChecked;
-                                else
-                                    ParserDiagnostics.ThrowParserException("Invalid entry in XRef table, ID=" + id + ", Generation=" + generation + ", Position=" + position + ", ID of referenced object=" + idChecked + ", Generation of referenced object=" + generationChecked);  // TODO L10N using PSSR.
+                                else if (_strict) {
+	                                ParserDiagnostics.ThrowParserException("Invalid entry in XRef table, ID=" + id + ", Generation=" + generation + ", Position=" + position + ", ID of referenced object=" + idChecked + ", Generation of referenced object=" + generationChecked); // TODO L10N using PSSR.
+                                }
                             }
                             //!!!new 2018-03-14 end
 #endif
@@ -2082,6 +2085,7 @@ namespace PdfSharp.Pdf.IO
         private readonly PdfDocument _document;
         private readonly Lexer _lexer;
         private readonly ShiftStack _stack;
+        readonly bool _strict;
     }
 
     static class StreamHelper

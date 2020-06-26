@@ -276,7 +276,7 @@ namespace PdfSharp.Pdf.IO
         /// <summary>
         /// Opens an existing PDF document.
         /// </summary>
-        public static PdfDocument Open(Stream stream, string password, PdfDocumentOpenMode openmode, PdfPasswordProvider passwordProvider)
+        public static PdfDocument Open(Stream stream, string password, PdfDocumentOpenMode openmode, PdfPasswordProvider passwordProvider, bool strict = true)
         {
             PdfDocument document;
 #if !DEBUG
@@ -298,7 +298,7 @@ namespace PdfSharp.Pdf.IO
                     throw new InvalidOperationException(PSSR.InvalidPdf);
 
                 document._irefTable.IsUnderConstruction = true;
-                Parser parser = new Parser(document);
+                Parser parser = new Parser(document, strict);
                 // Read all trailers or cross-reference streams, but no objects.
                 document._trailer = parser.ReadTrailer();
                 if (document._trailer == null)
