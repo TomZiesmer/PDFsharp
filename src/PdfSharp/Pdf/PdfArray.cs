@@ -268,6 +268,11 @@ namespace PdfSharp.Pdf
                 if (obj == null)
                     return 0;
 
+                PdfReference reference = obj as PdfReference;
+                if (reference != null) {
+	                obj = reference.Value;
+                }
+
                 PdfReal real = obj as PdfReal;
                 if (real != null)
                     return real.Value;
